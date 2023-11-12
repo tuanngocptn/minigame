@@ -62,6 +62,12 @@ export default class Preload extends Phaser.Scene {
       'assets/animations/firework.png' + `?v=${window.VersionClient}`,
       { frameWidth: 400, frameHeight: 212, endFrame: 40 },
     )
+    this.load.atlas(
+      'disconnectSprites',
+      'assets/atlas/disconnect.png' + `?v=${window.VersionClient}`,
+      'assets/atlas/disconnect.json' + `?v=${window.VersionClient}`,
+      {},
+    )
   }
 
   // Write your code here

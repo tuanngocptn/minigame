@@ -1,5 +1,6 @@
 // You can write more code here
 
+import ButtonWithText from '../components/Button.js'
 import TextButton from '../components/Button.js'
 import Lixi from '../components/Lixi.js'
 
@@ -70,13 +71,16 @@ export default class MainGame extends Phaser.Scene {
   }
 
   addFirework() {
-    const config = {
-      key: 'fireworkAnimation',
-      frames: this.anims.generateFrameNumbers('firework', { start: 0, end: 23, first: 23 }),
-      frameRate: 20,
-      repeat: -1,
+    let config = this.anims.get('fireworkAnimation')
+    if (!config) {
+      config = {
+        key: 'fireworkAnimation',
+        frames: this.anims.generateFrameNumbers('firework', { start: 0, end: 23, first: 23 }),
+        frameRate: 20,
+        repeat: -1,
+      }
+      this.anims.create(config)
     }
-    this.anims.create(config)
     this.add
       .sprite(
         (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
@@ -87,11 +91,25 @@ export default class MainGame extends Phaser.Scene {
   }
   // Write more your code here
 
+  addBtn() {
+    const btnRestart = new ButtonWithText(
+      this,
+      (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
+      100,
+      { txtValue: 'Restart', eventName: 'restart' },
+    )
+    btnRestart.on('restart', () => {
+      this.scene.restart()
+    })
+    this.add.existing(btnRestart)
+  }
+
   create() {
     this.addPalace()
     this.addFirework()
     this.editorCreate()
     this.textFPS = this.add.text(20, 20, '')
+    this.addBtn()
   }
 
   update() {

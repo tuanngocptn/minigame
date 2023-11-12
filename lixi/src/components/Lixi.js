@@ -20,14 +20,6 @@ export default class Lixi extends Phaser.GameObjects.Sprite {
         targets: this,
         duration: 200,
         y: (window.GameConfig.GAME_HEIGHT + 600) * window.GameConfig.RESIZE,
-        onComplete: () => {
-          setTimeout(() => {
-            this.angle = this.initAngle
-            this.x = this.positionX
-            this.y = this.positionY
-            this.scale = 0.8
-          }, 1000)
-        },
       })
     }
     const tweenShake = () => {
