@@ -1,5 +1,6 @@
 // You can write more code here
 
+import TextButton from '../components/Button.js'
 import Lixi from '../components/Lixi.js'
 
 /* START OF COMPILED CODE */
@@ -28,6 +29,7 @@ export default class MainGame extends Phaser.Scene {
       this,
       (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
       (window.GameConfig.GAME_HEIGHT / 2) * window.GameConfig.RESIZE,
+      'lixiDo',
       { onClicked: this.onDinoClick },
     )
     lixiRight.initPosition(
@@ -40,6 +42,7 @@ export default class MainGame extends Phaser.Scene {
       this,
       (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
       (window.GameConfig.GAME_HEIGHT / 2) * window.GameConfig.RESIZE,
+      'lixiXanh',
       { onClicked: this.onDinoClick },
     )
     lixiLeft.initPosition(0, (window.GameConfig.GAME_HEIGHT - 200) * window.GameConfig.RESIZE, 20)
@@ -57,11 +60,42 @@ export default class MainGame extends Phaser.Scene {
   }
 
   /* START-USER-CODE */
+  addPalace() {
+    this.palaceSprite = this.add.sprite(
+      (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
+      (window.GameConfig.GAME_HEIGHT / 2 - 200) * window.GameConfig.RESIZE,
+      'palace',
+    )
+    this.palaceSprite.setScale(0.3)
+  }
 
+  addFirework() {
+    const config = {
+      key: 'fireworkAnimation',
+      frames: this.anims.generateFrameNumbers('firework', { start: 0, end: 23, first: 23 }),
+      frameRate: 20,
+      repeat: -1,
+    }
+    this.anims.create(config)
+    this.add
+      .sprite(
+        (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
+        (window.GameConfig.GAME_HEIGHT / 2 - 300) * window.GameConfig.RESIZE,
+        'firework',
+      )
+      .play('fireworkAnimation')
+  }
   // Write more your code here
 
   create() {
+    this.addPalace()
+    this.addFirework()
     this.editorCreate()
+    this.textFPS = this.add.text(20, 20, '')
+  }
+
+  update() {
+    this.textFPS.setText(`FPS: ${parseInt(this.sys.game.loop.actualFps)}`)
   }
 
   /* END-USER-CODE */

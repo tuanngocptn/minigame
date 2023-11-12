@@ -52,8 +52,16 @@ export default class Preload extends Phaser.Scene {
   }
 
   loadAssets() {
-    this.load.image('lixi', 'assets/img/lixi.jpg' + `?v=${window.VersionClient}`)
-    this.load.image('lixi1', 'assets/img/lixi1.png' + `?v=${window.VersionClient}`)
+    this.load.image('lixiDo', 'assets/img/lixi_do.png' + `?v=${window.VersionClient}`)
+    this.load.image('lixiXanh', 'assets/img/lixi_xanh.png' + `?v=${window.VersionClient}`)
+    this.load.image('lixiDoOpen', 'assets/img/lixi_do_open.png' + `?v=${window.VersionClient}`)
+    this.load.image('lixiXanhOpen', 'assets/img/lixi_xanh_open.png' + `?v=${window.VersionClient}`)
+    this.load.image('palace', 'assets/img/palace.png' + `?v=${window.VersionClient}`)
+    this.load.spritesheet(
+      'firework',
+      'assets/animations/firework.png' + `?v=${window.VersionClient}`,
+      { frameWidth: 400, frameHeight: 212, endFrame: 40 },
+    )
   }
 
   // Write your code here

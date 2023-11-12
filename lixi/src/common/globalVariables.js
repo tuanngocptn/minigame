@@ -11,7 +11,7 @@ window.GameConfig.SCENES = {
 }
 
 var game = null
-window.VersionClient = "1.0.8";
+window.VersionClient = "1.0.0";
 Array.prototype.sortOn = function () {
   var dup = this.slice()
   if (!arguments.length) return dup.sort()
