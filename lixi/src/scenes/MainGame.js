@@ -72,15 +72,35 @@ export default class MainGame extends Phaser.Scene {
 
   addFirework() {
     let config = this.anims.get('fireworkAnimation')
+    let configFirework1 = this.anims.get('fireworkAnimation1')
+    let configFlower = this.anims.get('flowerAnimation')
     if (!config) {
       config = {
         key: 'fireworkAnimation',
-        frames: this.anims.generateFrameNumbers('firework', { start: 0, end: 23, first: 23 }),
+        frames: this.anims.generateFrameNumbers('firework', { start: 0, end: -1, first: 0 }),
         frameRate: 20,
         repeat: -1,
       }
       this.anims.create(config)
     }
+    if (!configFirework1) {
+      configFirework1 = {
+        key: 'fireworkAnimation1',
+        frames: this.anims.generateFrameNumbers('firework1', { start: 0, end: -1, first: 0 }),
+        frameRate: 20,
+        repeat: -1,
+      }
+      this.anims.create(configFirework1)
+    }
+    // if (!configFlower) {
+    //   configFlower = {
+    //     key: 'flowerAnimation',
+    //     frames: this.anims.generateFrameNumbers('flower', { start: 0, end: -1, first: 0 }),
+    //     frameRate: 20,
+    //     repeat: -1,
+    //   }
+    //   this.anims.create(configFlower)
+    // }
     this.add
       .sprite(
         (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
@@ -88,6 +108,21 @@ export default class MainGame extends Phaser.Scene {
         'firework',
       )
       .play('fireworkAnimation')
+    this.add
+      .sprite(
+        (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
+        (window.GameConfig.GAME_HEIGHT / 2 - 300) * window.GameConfig.RESIZE,
+        'firework1',
+      )
+      .setScale(0.3)
+      .play('fireworkAnimation1')
+    // this.add
+    //   .sprite(
+    //     (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
+    //     (window.GameConfig.GAME_HEIGHT / 2 - 300) * window.GameConfig.RESIZE,
+    //     'flower',
+    //   )
+    //   .play('flowerAnimation')
   }
   // Write more your code here
 

@@ -25,10 +25,15 @@ export default class Lixi extends Phaser.GameObjects.Sprite {
     const tweenShake = () => {
       this.scene.tweens.add({
         targets: this,
-        duration: 180,
+        duration: 200,
+				ease: 'sine.inOut',
         repeat: 5,
         yoyo: true,
-        angle: 20,
+        angle: this.angle > 0 ? { start: 20, to: -20 } : { start: -20, to: 20 },
+        x: {
+          start: window.GameConfig.GAME_WIDTH / 2 - 10,
+          to: window.GameConfig.GAME_WIDTH / 2 + 10,
+        },
         onComplete: () => {
           tweenToBottom()
         },

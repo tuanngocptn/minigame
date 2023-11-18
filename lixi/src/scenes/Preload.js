@@ -62,6 +62,16 @@ export default class Preload extends Phaser.Scene {
       'assets/animations/firework.png' + `?v=${window.VersionClient}`,
       { frameWidth: 400, frameHeight: 212, endFrame: 40 },
     )
+		this.load.spritesheet(
+      'firework1',
+      'assets/animations/firework1.png' + `?v=${window.VersionClient}`,
+      { frameWidth: 1921, frameHeight: 1080, endFrame: 49 },
+    )
+		this.load.spritesheet(
+      'flower',
+      'assets/animations/flower.png' + `?v=${window.VersionClient}`,
+      { frameWidth: 300, frameHeight: 300, endFrame: 210 },
+    )
     this.load.atlas(
       'disconnectSprites',
       'assets/atlas/disconnect.png' + `?v=${window.VersionClient}`,
