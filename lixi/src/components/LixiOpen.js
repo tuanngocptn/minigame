@@ -1,4 +1,4 @@
-export default class Lixi extends Phaser.GameObjects.Sprite {
+export default class LixiOpen extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, texture, configs) {
     super(scene, x, y, texture)
     this.configs = configs

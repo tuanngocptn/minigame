@@ -1,7 +1,7 @@
 // You can write more code here
 
-import ButtonWithText from '../components/Button.js'
-import TextButton from '../components/Button.js'
+// import ButtonWithText from '../components/Button.js'
+import ButtonImage from '../components/ButtonImg.js'
 import Lixi from '../components/Lixi.js'
 
 /* START OF COMPILED CODE */
@@ -26,33 +26,51 @@ export default class MainGame extends Phaser.Scene {
   }
 
   addLixies() {
-    const lixiRight = new Lixi(
+    this.lixiRight = new Lixi(
       this,
       (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
       (window.GameConfig.GAME_HEIGHT / 2) * window.GameConfig.RESIZE,
       'lixiDo',
-      { onClicked: this.onDinoClick },
+      {
+        onClicked: () => {
+          this.onRutLiXi(false)
+        },
+      },
     )
-    lixiRight.initPosition(
+    this.lixiRight.initPosition(
       window.GameConfig.GAME_WIDTH * window.GameConfig.RESIZE,
       (window.GameConfig.GAME_HEIGHT - 200) * window.GameConfig.RESIZE,
       -20,
     )
 
-    const lixiLeft = new Lixi(
+    this.lixiLeft = new Lixi(
       this,
       (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
       (window.GameConfig.GAME_HEIGHT / 2) * window.GameConfig.RESIZE,
       'lixiXanh',
-      { onClicked: this.onDinoClick },
+      {
+        onClicked: () => {
+          this.onRutLiXi(true)
+        },
+      },
     )
-    lixiLeft.initPosition(0, (window.GameConfig.GAME_HEIGHT - 200) * window.GameConfig.RESIZE, 20)
+    this.lixiLeft.initPosition(
+      0,
+      (window.GameConfig.GAME_HEIGHT - 200) * window.GameConfig.RESIZE,
+      20,
+    )
 
-    this.add.existing(lixiRight)
-    this.add.existing(lixiLeft)
+    this.add.existing(this.lixiRight)
+    this.add.existing(this.lixiLeft)
   }
 
-  onDinoClick() {}
+  onRutLiXi(isLeftLixi) {
+    if (isLeftLixi) {
+      this.lixiRight.goOut(false)
+    } else {
+      this.lixiLeft.goOut(true)
+    }
+  }
 
   /** @returns {void} */
   editorCreate() {
@@ -62,45 +80,66 @@ export default class MainGame extends Phaser.Scene {
 
   /* START-USER-CODE */
   addPalace() {
-    this.palaceSprite = this.add.sprite(
+    this.palaceContainer = this.add.container(
       (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
       (window.GameConfig.GAME_HEIGHT / 2 - 200) * window.GameConfig.RESIZE,
-      'palace',
     )
-    this.palaceSprite.setScale(0.3)
+    const palace = new Phaser.GameObjects.Sprite(this, 0, 0, 'palace')
+    const bottomPalace = new Phaser.GameObjects.Sprite(
+      this,
+      0,
+      250 * window.GameConfig.RESIZE,
+      'bottomPalace',
+    )
+    const txtRutLixi = new Phaser.GameObjects.Text(
+      this,
+      0,
+      -130 * window.GameConfig.RESIZE,
+      'RÚT LÌ XÌ',
+      {
+        font: '28px GilroyBold',
+      },
+    )
+    txtRutLixi.setOrigin(0.5)
+    palace.setScale(0.28)
+    bottomPalace.setScale(0.28)
+    this.palaceContainer.add(palace)
+    this.palaceContainer.add(bottomPalace)
+    this.palaceContainer.add(txtRutLixi)
   }
 
   addFirework() {
     let config = this.anims.get('fireworkAnimation')
-    let configFirework1 = this.anims.get('fireworkAnimation1')
-    let configFlower = this.anims.get('flowerAnimation')
     if (!config) {
       config = {
         key: 'fireworkAnimation',
         frames: this.anims.generateFrameNumbers('firework', { start: 0, end: -1, first: 0 }),
-        frameRate: 20,
+        frameRate: 30,
         repeat: -1,
       }
       this.anims.create(config)
     }
+    let configFirework1 = this.anims.get('fireworkAnimation1')
     if (!configFirework1) {
       configFirework1 = {
         key: 'fireworkAnimation1',
         frames: this.anims.generateFrameNumbers('firework1', { start: 0, end: -1, first: 0 }),
-        frameRate: 20,
+        frameRate: 30,
         repeat: -1,
       }
       this.anims.create(configFirework1)
     }
-    // if (!configFlower) {
-    //   configFlower = {
-    //     key: 'flowerAnimation',
-    //     frames: this.anims.generateFrameNumbers('flower', { start: 0, end: -1, first: 0 }),
-    //     frameRate: 20,
-    //     repeat: -1,
-    //   }
-    //   this.anims.create(configFlower)
-    // }
+    let configSuccess = this.anims.get('successAnimation')
+    if (!configSuccess) {
+      configSuccess = {
+        key: 'successAnimation',
+        frames: this.anims.generateFrameNumbers('success', { start: 0, end: -1, first: 0 }),
+        frameRate: 30,
+        repeat: -1,
+      }
+      this.anims.create(configSuccess)
+    }
+    //
     this.add
       .sprite(
         (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
@@ -116,23 +155,18 @@ export default class MainGame extends Phaser.Scene {
       )
       .setScale(0.3)
       .play('fireworkAnimation1')
-    // this.add
-    //   .sprite(
-    //     (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
-    //     (window.GameConfig.GAME_HEIGHT / 2 - 300) * window.GameConfig.RESIZE,
-    //     'flower',
-    //   )
-    //   .play('flowerAnimation')
+    this.add
+      .sprite(
+        (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
+        (window.GameConfig.GAME_HEIGHT / 2 - 300) * window.GameConfig.RESIZE,
+        'success',
+      )
+      .setScale(0.6)
+      .play('successAnimation')
   }
-  // Write more your code here
 
   addBtn() {
-    const btnRestart = new ButtonWithText(
-      this,
-      (window.GameConfig.GAME_WIDTH / 2) * window.GameConfig.RESIZE,
-      100,
-      { txtValue: 'Restart', eventName: 'restart' },
-    )
+    const btnRestart = new ButtonImage(this, 50, 100, { imgName: 'undo', eventName: 'restart' })
     btnRestart.on('restart', () => {
       this.scene.restart()
     })
