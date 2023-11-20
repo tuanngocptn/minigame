@@ -6,7 +6,7 @@ window.addEventListener('load', function () {
   game = new Phaser.Game({
     width: window.GameConfig.GAME_WIDTH,
     height: window.GameConfig.GAME_HEIGHT,
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS,
     backgroundColor: colors.background,
     scale: {
       mode: Phaser.Scale.FIT,
